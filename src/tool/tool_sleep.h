@@ -9,6 +9,11 @@
 #ifndef TOOL_TOOL_SLEEP_H_
 #define TOOL_TOOL_SLEEP_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #ifdef WIN32
 #include <windows.h>
 #else
@@ -17,4 +22,7 @@
 
 void fly_sleep(int millis);
 
+#ifdef __cplusplus
+}
+#endif
 #endif /* TOOL_TOOL_SLEEP_H_ */

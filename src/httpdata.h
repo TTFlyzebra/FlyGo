@@ -12,11 +12,16 @@
 #include <stdlib.h>
 #include <string.h>
 #include "tool/tool_string.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef struct SHTTPDATA{
 	char url[2048];
 	char header[2048];//参数之间以\r\n符号分隔
 	char postdata[4096];
+	int time;
+	int sleep;
 }SHttpData,*pHttpData;
 
 typedef struct LINKSHTTPDATA{
@@ -27,4 +32,7 @@ typedef struct LINKSHTTPDATA{
 ListSHttpData* get_curl_http_data(char * curlStr,ListSHttpData* listSHttpData);
 void free_curl_http_data(ListSHttpData* listSHttpData);
 
+#ifdef __cplusplus
+}
+#endif
 #endif /* DATA_HTTPDATA_H_ */

@@ -7,6 +7,9 @@
 
 #ifndef TOOL_TOOL_FILE_H_
 #define TOOL_TOOL_FILE_H_
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /**
  * 函数功能：读取文件内容，以字符串形式返回所读取的文件内容
@@ -16,4 +19,8 @@
  */
 char* read_all_file(char*buffer,char *filename);
 
+
+#ifdef __cplusplus
+}
+#endif
 #endif /* TOOL_TOOL_FILE_H_ */
