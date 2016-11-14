@@ -76,6 +76,7 @@ int send_shttpdata(SHttpData *sHttpData, char *savefile) {
 			curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
 		}
 		res = curl_easy_perform(curl);
+
 //		printf("%d", res);
 	}
 	curl_slist_free_all(headers);

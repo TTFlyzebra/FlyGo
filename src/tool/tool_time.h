@@ -20,6 +20,4 @@ char* get_current_time(char *buffer,int len, char* template);
 #ifdef __cplusplus
 }
 #endif
-
-
 #endif /* TIMEUTIL_H_ */

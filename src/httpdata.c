@@ -61,6 +61,7 @@ ListSHttpData* get_curl_http_data(char * curlStr, ListSHttpData* firstListSHttpD
 			surl = listSHttpData->sHttpData.postdata;
 			memcpy(surl, subBuffer, strlen(subBuffer));
 //			printf("%d:%s\n", i, listSHttpData->sHttpData.postdata);
+
 		}
 	}
 
