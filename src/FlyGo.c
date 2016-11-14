@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
 	char *filename = "set.sh";
 	ListSHttpData *firstListSCurlData = NULL;
 	ListSHttpData *temListSCurlData = NULL;
-	int loopsum = 1;
+	int loopsum = 1000000;
 	int looptime = 1;
 	int i = 0;
 
