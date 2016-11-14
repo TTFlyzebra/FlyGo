@@ -7,8 +7,8 @@
 
 #include "httpdata.h"
 ListSHttpData* get_curl_http_data(char * curlStr, ListSHttpData* firstListSHttpData) {
-	ListSHttpData* listSHttpData;
-	ListSHttpData* newListSHttpData;
+	ListSHttpData* listSHttpData = NULL;
+	ListSHttpData* newListSHttpData = NULL;
 	char* startPos = curlStr;
 	char* subStartPos;
 	char buffer[4096];
@@ -16,17 +16,22 @@ ListSHttpData* get_curl_http_data(char * curlStr, ListSHttpData* firstListSHttpD
 	int i = 0;
 	char *surl;
 
+	printf("----get_curl_http_data----\n");
+
 	while (startPos != NULL) {
 		i++;
 		startPos = cut_string(startPos, "", "", "\n", buffer);
 		if (buffer[0] != '\0') {
-			newListSHttpData = malloc(sizeof(ListSHttpData));
+
+			newListSHttpData = (ListSHttpData*)malloc(sizeof(ListSHttpData));
+
+			memset(newListSHttpData,0,sizeof(ListSHttpData));
 
 			if (firstListSHttpData == NULL) {
 				firstListSHttpData = newListSHttpData;
 			}
 
-			if (listSHttpData == NULL) {
+			if (NULL == listSHttpData) {
 				listSHttpData = newListSHttpData;
 			} else {
 				listSHttpData->next = newListSHttpData;

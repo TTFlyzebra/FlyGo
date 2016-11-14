@@ -14,8 +14,8 @@
 #include "tool/tool_string.h"
 
 typedef struct SHTTPDATA{
-	char url[4096];
-	char header[4096];//参数之间以\r\n符号分隔
+	char url[2048];
+	char header[2048];//参数之间以\r\n符号分隔
 	char postdata[4096];
 }SHttpData,*pHttpData;
 
