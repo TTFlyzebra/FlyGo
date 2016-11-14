@@ -10,9 +10,9 @@ ListSHttpData* get_curl_http_data(char * curlStr, ListSHttpData* firstListSHttpD
 	ListSHttpData* listSHttpData = NULL;
 	ListSHttpData* newListSHttpData = NULL;
 	char* startPos = curlStr;
-	char* subStartPos;
-	char buffer[4096];
-	char subBuffer[4096];
+	char* subStartPos = NULL;
+	char buffer[4096] = {0};
+	char subBuffer[4096] = {0};
 	int i = 0;
 	char *surl;
 
@@ -68,7 +68,7 @@ ListSHttpData* get_curl_http_data(char * curlStr, ListSHttpData* firstListSHttpD
 }
 
 void free_curl_http_data(ListSHttpData* listSHttpData) {
-	ListSHttpData* freeListCurlData;
+	ListSHttpData* freeListCurlData = NULL;
 	freeListCurlData = listSHttpData;
 	while (freeListCurlData != NULL) {
 		listSHttpData = freeListCurlData->next;

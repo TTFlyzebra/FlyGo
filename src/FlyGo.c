@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
 	ListSHttpData *temListSCurlData = NULL;
 	int loopsum = 1;
 	int looptime = 1;
-	int i;
+	int i = 0;
 
 
 	if (argc > 3) {

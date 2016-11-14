@@ -1,7 +1,7 @@
 #include "curlsend.h"
 
 int http_get(char *url, char *savefile) {
-	CURL *curl;
+	CURL *curl = NULL;
 	CURLcode res = CURL_LAST;
 	struct curl_slist *headers = NULL;
 	FILE *fp = fopen(savefile, "w");
@@ -44,12 +44,12 @@ int http_post(char *url, char *data, char *savefile) {
 }
 
 int send_shttpdata(SHttpData *sHttpData, char *savefile) {
-	CURL *curl;
+	CURL *curl = NULL;
 	CURLcode res = CURL_LAST;
 	struct curl_slist *headers = NULL;
-	FILE *fp;
+	FILE *fp = NULL;
 	char buffer[1024];
-	char* startPos;
+	char* startPos = NULL;
 
 	if (savefile != NULL) {
 		fp = fopen(savefile, "w");

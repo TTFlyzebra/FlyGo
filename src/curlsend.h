@@ -23,7 +23,6 @@ extern "C" {
  */
 int http_get(char *url,char *savefile);
 
-
 /**
  * 发送HTT POST请求
  */
@@ -31,7 +30,7 @@ int http_post(char *url,char *data,char *savefile);
 
 /**
  * 发送HTTP请求
- */
+ * */
 int send_shttpdata(SHttpData *sHttpData, char *savefile);
 
 #ifdef __cplusplus
