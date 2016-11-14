@@ -18,7 +18,12 @@ extern "C" {
 #endif
 
 int http_get(char *url,char *savefile);
+
 int http_post(char *url,char *data,char *savefile);
+
+/**
+ * 发送HTTP数据包
+ */
 int send_shttpdata(SHttpData *sHttpData, char *savefile);
 
 #ifdef __cplusplus
