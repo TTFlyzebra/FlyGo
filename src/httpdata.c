@@ -6,21 +6,22 @@
  */
 
 #include "httpdata.h"
-ListSHttpData* get_curl_http_data(char * curlStr,
-		ListSHttpData* firstListSHttpData) {
+ListSHttpData* get_curl_http_data(char * curlStr, ListSHttpData* firstListSHttpData) {
 	ListSHttpData* listSHttpData = NULL;
 	ListSHttpData* newListSHttpData = NULL;
 	char* startPos = curlStr;
 	char* subStartPos = NULL;
 	char oneCurlBuffer[4096] = { 0 };
 	char subBuffer[4096] = { 0 };
-	char *surl = NULL;
+	char *pTempChar = NULL;
+	int i = 0;
 
 	printf("###################start get_curl_http_data###################\n");
 
 	while (startPos != NULL) {
+		i++;
 		if (strlen(startPos) == 0) {
-			return firstListSHttpData;
+			break;
 		}
 		startPos = cut_string_with_start_mark(startPos, "curl", oneCurlBuffer);
 
@@ -29,7 +30,7 @@ ListSHttpData* get_curl_http_data(char * curlStr,
 //		continue;
 
 		if (oneCurlBuffer[0] == '\0') {
-			return firstListSHttpData;
+			break;
 		}
 		newListSHttpData = (ListSHttpData*) malloc(sizeof(ListSHttpData));
 		memset(newListSHttpData, 0, sizeof(ListSHttpData));
@@ -45,60 +46,71 @@ ListSHttpData* get_curl_http_data(char * curlStr,
 			listSHttpData = listSHttpData->next;
 		}
 
-		printf("----------------------HTTPDATA START----------------------\n");
+		printf("%d>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n",i);
 
 		//获取url
 		subStartPos = oneCurlBuffer;
 		subStartPos = cut_string(subStartPos, "", "'", "'", subBuffer);
 		if (subBuffer[0] != '\0') {
-			surl = listSHttpData->sHttpData.url;
-			memcpy(surl, subBuffer, strlen(subBuffer));
-			printf("%s\n", listSHttpData->sHttpData.url);
+			pTempChar = listSHttpData->sHttpData.url;
+			memcpy(pTempChar, subBuffer, strlen(subBuffer));
+//			printf("%s\n", listSHttpData->sHttpData.url);
 		}
 
 		//获取header
 		subStartPos = oneCurlBuffer;
-		surl = listSHttpData->sHttpData.header;
-		memset(surl, 0, strlen(surl));
+		pTempChar = listSHttpData->sHttpData.header;
+		memset(pTempChar, 0, strlen(pTempChar));
 		while (subStartPos != NULL) {
 			subStartPos = cut_string(subStartPos, "-H", "'", "'", subBuffer);
 			if (subBuffer[0] != '\0') {
-				strcat(surl, subBuffer);
-				strcat(surl, "\n");
+				strcat(pTempChar, subBuffer);
+				strcat(pTempChar, "\n");
 			}
 		}
-
-		printf("\n%s", listSHttpData->sHttpData.header);
+//		printf("\n%s", listSHttpData->sHttpData.header);
 
 		//获取data
 		subStartPos = oneCurlBuffer;
 		subStartPos = cut_string(subStartPos, "-data", "'", "'", subBuffer);
 		if (subBuffer[0] != '\0') {
-			surl = listSHttpData->sHttpData.postdata;
-			memcpy(surl, subBuffer, strlen(subBuffer));
-			printf("\n%s\n", listSHttpData->sHttpData.postdata);
+			pTempChar = listSHttpData->sHttpData.postdata;
+			memcpy(pTempChar, subBuffer, strlen(subBuffer));
+//			printf("\n%s\n", listSHttpData->sHttpData.postdata);
 		}
 
 		//获取延时时间,SH文件中的sleep
 		subStartPos = oneCurlBuffer;
-		subStartPos = cut_string(subStartPos, "sleep", "", "\n", subBuffer);
+		subStartPos = cut_string(subStartPos, "sleep", "sleep", "\n", subBuffer);
 		if (subBuffer[0] != '\0') {
 			listSHttpData->sHttpData.sleepTime = atoi(subBuffer);
 		} else {
 			listSHttpData->sHttpData.sleepTime = 0;
 		}
-		printf("\nsleep=%d\n", listSHttpData->sHttpData.sleepTime);
+//		printf("\nsleep=%d", listSHttpData->sHttpData.sleepTime);
 
-		//获取时间，如果有的话
+		//获取时间，如果有的话，先从reporttime中找,再从ctime中找
 		subStartPos = oneCurlBuffer;
-		subStartPos = cut_string(subStartPos, "time=2016", "", "&", subBuffer);
-		if (subBuffer[0] != '\0') {
-			surl = listSHttpData->sHttpData.creatTime;
-			memcpy(surl, subBuffer, strlen(subBuffer));
-			printf("\n%s\n", listSHttpData->sHttpData.creatTime);
+		subStartPos = cut_string(subStartPos, "reporttime=2016", "time=", "&",subBuffer);
+		if (subStartPos==NULL) {
+			subStartPos = oneCurlBuffer;
+			subStartPos = cut_string(subStartPos, "ctime=2016", "time=", "&",subBuffer);
 		}
-
-		printf("----------------------HTTPDATA END----------------------\n");
+		if (subStartPos==NULL) {
+			subStartPos = oneCurlBuffer;
+			subStartPos = cut_string(subStartPos, "reporttime=2016", "time=", "'",subBuffer);
+		}
+		if (subStartPos==NULL) {
+			subStartPos = oneCurlBuffer;
+			subStartPos = cut_string(subStartPos, "ctime=2016", "time=", "'",subBuffer);
+		}
+		if (subBuffer[0] != '\0') {
+			pTempChar = listSHttpData->sHttpData.creatTime;
+			memcpy(pTempChar, subBuffer, strlen(subBuffer));
+			url_decode(listSHttpData->sHttpData.creatTime,strlen(subBuffer));
+			printf("time=%s\n", listSHttpData->sHttpData.creatTime);
+		}
+//		printf("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
 	}
 	printf("###################finish get_curl_http_data###################\n");
 	return firstListSHttpData;
