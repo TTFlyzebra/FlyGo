@@ -17,21 +17,28 @@
 #include "curlsend.h"
 #include "tool/tool_sleep.h"
 #include "tool/tool_file.h"
+#include "tool/tool_time.h"
+#include "tool/tool_url.h"
 
 int main(int argc, char** argv) {
-	char filedata_bf[1024 * 512];
+	char replace_bf[256];
+	char *crt_time;
+	char filedata_bf[1024 * 512] = { 0 };
 	char *filedata = NULL;
+
 	char *filename = "set.sh";
 	ListSHttpData *firstListSCurlData = NULL;
 	ListSHttpData *temListSCurlData = NULL;
+
 	int loopsum = 1;
 	int looptime = 1;
 	int i = 0;
+	int newLen = 0;
 
-	printf("###program start!\n");
+	printf("###%s#program start!\n", flytime());
 
 	if (argc > 3) {
-		filename =  argv[3];
+		filename = argv[3];
 		printf("filename=%s;\n", argv[3]);
 	}
 
@@ -55,20 +62,33 @@ int main(int argc, char** argv) {
 	filedata = read_all_file(filename, filedata_bf);
 
 	if (filedata != NULL) {
-		printf("###read setting file succeed,start get httpdata......\n");
+		printf("###%sread setting file succeed,start get httpdata......\n",	flytime());
 		firstListSCurlData = get_curl_http_data(filedata, firstListSCurlData);
-		printf("###get httpdate succeed, start send http......\n");
+		printf("###%sget httpdate succeed, start send http......\n", flytime());
 		for (i = 0; i < loopsum; i++) {
 			temListSCurlData = firstListSCurlData;
 			while (temListSCurlData != NULL) {
+//
+				memset(replace_bf, 0, strlen(replace_bf));
+				crt_time = flytime();
+				url_encode_char(crt_time, replace_bf, strlen(crt_time), &newLen,' ');
+				replace_string(temListSCurlData->sHttpData.url,"2016-11-", replace_bf);
+
+				replace_string_time(temListSCurlData->sHttpData.postdata,"2016%2D11%2D");
+
+//				printf("%s\n", temListSCurlData->sHttpData.url);
+//				printf("%s\n", temListSCurlData->sHttpData.postdata);
+
 				send_shttpdata(&(temListSCurlData->sHttpData), NULL);
 				fly_sleep(temListSCurlData->sHttpData.sleepTime * 1000);
 				temListSCurlData = temListSCurlData->next;
+
 			}
 #ifdef WIN32
 			printf("-- running loop %d/%d --\n", i + 1,loopsum);
 #else
-			printf("-- running loop %d/%d pid=%d --\n", i + 1,loopsum, getpid());
+			printf("-- running loop %d/%d pid=%d --\n", i + 1, loopsum,
+					getpid());
 #endif
 		}
 		printf("###send http finished!\n");
@@ -78,7 +98,7 @@ int main(int argc, char** argv) {
 		printf("###read setting file failed, file path = (%s) !\n", filename);
 	}
 
-	printf("###program exit!\n");
+	printf("###%s#program exit!\n", flytime());
 
 	return EXIT_SUCCESS;
 }

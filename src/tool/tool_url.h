@@ -9,6 +9,7 @@ extern "C" {
 
 int url_decode(char *str, int len);
 char *url_encode(char const *s,char *buffer, int len, int *new_length);
+char* url_encode_char(char const *s, char *buffer,int len, int *new_length,char nochar);
 
 #ifdef __cplusplus
 }

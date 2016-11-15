@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "tool/tool_string.h"
+#include "tool/tool_url.h"
 
 typedef struct SHTTPDATA{
 	char url[2048];
