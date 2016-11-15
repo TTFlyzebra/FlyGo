@@ -19,15 +19,16 @@
 #include "tool/tool_file.h"
 
 int main(int argc, char** argv) {
-	char filedata_bf[1024 * 1024];
+	char filedata_bf[1024 * 512];
 	char *filedata = NULL;
 	char *filename = "set.sh";
 	ListSHttpData *firstListSCurlData = NULL;
 	ListSHttpData *temListSCurlData = NULL;
-	int loopsum = 1000000;
+	int loopsum = 1;
 	int looptime = 1;
 	int i = 0;
 
+	printf("###program start!\n");
 
 	if (argc > 3) {
 		filename =  argv[3];
@@ -54,30 +55,30 @@ int main(int argc, char** argv) {
 	filedata = read_all_file(filename, filedata_bf);
 
 	if (filedata != NULL) {
-		printf("read setting file succeed,start go......\n");
+		printf("###read setting file succeed,start get httpdata......\n");
 		firstListSCurlData = get_curl_http_data(filedata, firstListSCurlData);
-		printf("get httpdate succeed, into loop......\n");
+		printf("###get httpdate succeed, start send http......\n");
 		for (i = 0; i < loopsum; i++) {
 			temListSCurlData = firstListSCurlData;
 			while (temListSCurlData != NULL) {
 				send_shttpdata(&(temListSCurlData->sHttpData), NULL);
+				fly_sleep(temListSCurlData->sHttpData.sleepTime * 1000);
 				temListSCurlData = temListSCurlData->next;
 			}
 #ifdef WIN32
-			printf(" -- sleep %d --loop %d \n", looptime, i + 1);
+			printf("-- running loop %d/%d --\n", i + 1,loopsum);
 #else
-			printf(" -- sleep %d --loop %d pid=%d \n", looptime, i + 1, getpid());
+			printf("-- running loop %d/%d pid=%d --\n", i + 1,loopsum, getpid());
 #endif
-			fly_sleep(looptime * 1000);
 		}
-		printf("Task finished!\n");
+		printf("###send http finished!\n");
 		free_curl_http_data(firstListSCurlData);
 		firstListSCurlData = NULL;
 	} else {
-		printf("read shttpdata from file (%s) fail!\n", filename);
+		printf("###read setting file failed, file path = (%s) !\n", filename);
 	}
 
-	printf("program exit!\n");
+	printf("###program exit!\n");
 
 	return EXIT_SUCCESS;
 }

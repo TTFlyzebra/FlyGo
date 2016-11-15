@@ -64,7 +64,7 @@ int send_shttpdata(SHttpData *sHttpData, char *savefile) {
 				startPos = cut_string(startPos, "", "", "\n",	buffer);
 				headers = curl_slist_append(headers, buffer);
 			}
-			curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);// 改协议头
+			curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 		}
 		curl_easy_setopt(curl, CURLOPT_COOKIEFILE, "cookie.txt");
 		if (sHttpData->postdata[0] != '\0') {
@@ -84,5 +84,8 @@ int send_shttpdata(SHttpData *sHttpData, char *savefile) {
 	if (fp != NULL) {
 		fclose(fp);
 	}
+
+	fflush(stdout);
+
 	return res;
 }
