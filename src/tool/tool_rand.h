@@ -17,8 +17,9 @@
 extern "C" {
 #endif
 
+char randStr[129];
 
-char* getRandomString(char* str,int lenght);
+char* getRandomString(int lenght);
 
 #ifdef __cplusplus
 }

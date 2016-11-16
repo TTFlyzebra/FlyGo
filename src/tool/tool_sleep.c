@@ -5,6 +5,7 @@
  *      Author: flyzebra
  */
 #include "tool_sleep.h"
+#include "../log/flylog.h"
 int n1;
 #ifndef WIN32
 void milliseconds_sleep(unsigned long mSec){
@@ -24,7 +25,7 @@ void fly_sleep(int millis){
 	}
 	n1 = millis/1000;
 	if (n1 > 0) {
-		printf("[W%d]", millis / 1000);
+		flylog_2("[sleep(%d)s]", millis / 1000);
 	}
 	fflush(stdout);
 #ifdef WIN32

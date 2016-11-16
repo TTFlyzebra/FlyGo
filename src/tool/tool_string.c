@@ -5,6 +5,7 @@
  *      Author: flyzebra
  */
 #include "tool_string.h"
+#include "../log/flylog.h"
 
 char* cut_string_with_start_mark(char* findStr, char* startMark, char *buffer) {
 	char *firstPos = findStr;
@@ -73,6 +74,8 @@ int replace_string_time(char* findStr, char* markStr) {
 		memcpy(startPos, buffer, strlen(buffer));
 		startPos = startPos + strlen(buffer);
 		startPos = strstr(startPos, markStr);
+	}else{
+		return 0;
 	}
 	while (startPos != NULL) {
 		fly_sleep(100);
@@ -86,18 +89,59 @@ int replace_string_time(char* findStr, char* markStr) {
 	return ret;
 }
 
-int replace_string(char* findStr, char* markStr, char *replaceStr) {
+/**
+ * 函数功能: 替换字符串
+ * 参数：@findStr _in_out 需要修改替换的字符串
+ * 		@markStr _in 从出现这个字符串的位置开始替换
+ * 		@replaceStr _in 替换的字符串
+ * 返回:返回值没有意义
+ * 注意：本函数字符串无越界检查
+ **/
+int replace_string_start(char* findStr, char* markStr, char *replaceStr) {
 	char *startPos = NULL;
 	int ret = 0;
 	startPos = strstr(findStr, markStr);
 	if (startPos != NULL) {
 		ret = 1;
+	}else{
+		return 0;
 	}
 	while (startPos != NULL) {
 		memcpy(startPos, replaceStr, strlen(replaceStr));
 		startPos = startPos + strlen(replaceStr);
 		startPos = strstr(startPos, markStr);
 	}
+//	replace_string_start(startPos,markStr,replaceStr);
 	return ret;
 }
+
+
+/**
+ * 函数功能: 替换字符串
+ * 参数：@findStr _in_out 需要修改替换的字符串
+ * 		@markStr _in 从出现这个字符串的位置开始替换
+ * 		@replaceStr _in 替换的字符串
+ * 返回:返回值没有意义
+ * 注意：本函数字符串无越界检查
+ **/
+int replace_string_end(char* findStr, char* markStr, char *replaceStr) {
+	char *startPos = NULL;
+	int ret = 0;
+	startPos = strstr(findStr, markStr);
+	if (startPos != NULL) {
+		ret = 1;
+	}else{
+		return 0;
+	}
+	while (startPos != NULL) {
+		startPos = startPos + strlen(markStr);
+		memcpy(startPos, replaceStr, strlen(replaceStr));
+		startPos = startPos + strlen(replaceStr);
+		startPos = strstr(startPos, markStr);
+	}
+//	replace_string_end(startPos,markStr,replaceStr);
+	return ret;
+}
+
+
 

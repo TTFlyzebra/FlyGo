@@ -16,18 +16,13 @@ ListSHttpData* get_curl_http_data(char * curlStr, ListSHttpData* firstListSHttpD
 	char *pTempChar = NULL;
 	int i = 0;
 
-	printf("###################start get_curl_http_data###################\n");
-
+	flylog_1("###################start get_curl_http_data###################\n");
 	while (startPos != NULL) {
 		i++;
 		if (strlen(startPos) == 0) {
 			break;
 		}
 		startPos = cut_string_with_start_mark(startPos, "curl", oneCurlBuffer);
-
-//		printf("--------------------------start-------------------------------\n%s",buffer);
-//		printf("---------------------------end----------------------------\n");
-//		continue;
 
 		if (oneCurlBuffer[0] == '\0') {
 			break;
@@ -46,15 +41,14 @@ ListSHttpData* get_curl_http_data(char * curlStr, ListSHttpData* firstListSHttpD
 			listSHttpData = listSHttpData->next;
 		}
 
-//		printf("%d>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n",i);
-
+		flylog_1("=====================================================%d Start\n",i);
 		//获取url
 		subStartPos = oneCurlBuffer;
 		subStartPos = cut_string(subStartPos, "", "'", "'", subBuffer);
 		if (subBuffer[0] != '\0') {
 			pTempChar = listSHttpData->sHttpData.url;
 			memcpy(pTempChar, subBuffer, strlen(subBuffer));
-//			printf("%s\n", listSHttpData->sHttpData.url);
+			flylog_1("%s\n", listSHttpData->sHttpData.url);
 		}
 
 		//获取header
@@ -68,7 +62,7 @@ ListSHttpData* get_curl_http_data(char * curlStr, ListSHttpData* firstListSHttpD
 				strcat(pTempChar, "\n");
 			}
 		}
-//		printf("\n%s", listSHttpData->sHttpData.header);
+		flylog_1("%s", listSHttpData->sHttpData.header);
 
 		//获取data
 		subStartPos = oneCurlBuffer;
@@ -76,7 +70,7 @@ ListSHttpData* get_curl_http_data(char * curlStr, ListSHttpData* firstListSHttpD
 		if (subBuffer[0] != '\0') {
 			pTempChar = listSHttpData->sHttpData.postdata;
 			memcpy(pTempChar, subBuffer, strlen(subBuffer));
-//			printf("\n%s\n", listSHttpData->sHttpData.postdata);
+			flylog_1("%s\n", listSHttpData->sHttpData.postdata);
 		}
 
 		//获取延时时间,SH文件中的sleep
@@ -87,7 +81,7 @@ ListSHttpData* get_curl_http_data(char * curlStr, ListSHttpData* firstListSHttpD
 		} else {
 			listSHttpData->sHttpData.sleepTime = 0;
 		}
-//		printf("\nsleep=%d", listSHttpData->sHttpData.sleepTime);
+		flylog_1("sleep = %d\n", listSHttpData->sHttpData.sleepTime);
 
 		//获取时间，如果有的话，先从reporttime中找,再从ctime中找
 		subStartPos = oneCurlBuffer;
@@ -108,11 +102,11 @@ ListSHttpData* get_curl_http_data(char * curlStr, ListSHttpData* firstListSHttpD
 			pTempChar = listSHttpData->sHttpData.creatTime;
 			memcpy(pTempChar, subBuffer, strlen(subBuffer));
 			url_decode(listSHttpData->sHttpData.creatTime,strlen(subBuffer));
-//			printf("time=%s\n", listSHttpData->sHttpData.creatTime);
+			flylog_1("time = %s\n", listSHttpData->sHttpData.creatTime);
 		}
-//		printf("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
+		flylog_1("=====================================================%d End\n",i);
 	}
-	printf("###################finish get_curl_http_data###################\n");
+	flylog_1("###################finish get_curl_http_data###################\n");
 	return firstListSHttpData;
 }
 

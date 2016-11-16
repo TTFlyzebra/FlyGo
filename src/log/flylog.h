@@ -11,4 +11,21 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+int  FLYLOG_DEBUG;
+void flylog(char *format, ...);
+void flylog_1(char *format, ...);
+void flylog_2(char *format, ...);
+void flylog_3(char *format, ...);
+void flylog_4(char *format, ...);
+void flylog_set_debug(int mSetDebug);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif /* LOG_FLYLOG_H_ */

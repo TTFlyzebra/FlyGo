@@ -19,7 +19,8 @@ extern "C" {
 
 char* cut_string_with_start_mark(char* findStr, char* startMark, char *buffer);
 char* cut_string(char* findStr, char* markStr, char *startStr, char *endStr,char *buffer);
-int replace_string(char* findStr, char* markStr, char *replaceStr);
+int replace_string_start(char* findStr, char* markStr, char *replaceStr);
+int replace_string_end(char* findStr, char* markStr, char *replaceStr);
 int replace_string_time(char* findStr, char* markStr);
 
 #ifdef __cplusplus

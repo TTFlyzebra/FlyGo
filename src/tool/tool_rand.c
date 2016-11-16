@@ -6,26 +6,31 @@
  */
 #include "tool_rand.h"
 
-char* getRandomString(char *str,int length) {
+/**
+ * 函数功能:生成随机字符串
+ * 参数：@length 生成的字符串长度
+ * 返回：返回所生成的随机字符串
+ **/
+char* getRandomString(int length) {
 	int flag;
     int i;
 	for (i = 0; i < length; i++) {
 		flag = rand() % 3;
 		switch (flag) {
 		case 0:
-			str[i] = 'A' + rand() % 26;
+			randStr[i] = 'A' + rand() % 26;
 			break;
 		case 1:
-			str[i] = 'a' + rand() % 26;
+			randStr[i] = 'a' + rand() % 26;
 			break;
 		case 2:
-			str[i] = '0' + rand() % 10;
+			randStr[i] = '0' + rand() % 10;
 			break;
 		default:
-			str[i] = 'x';
+			randStr[i] = 'x';
 			break;
 		}
 	}
-	str[length] = '\0';
-	return str;
+	randStr[length] = '\0';
+	return randStr;
 }
