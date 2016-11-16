@@ -5,7 +5,7 @@
  *      Author: flyzebra
  */
 #include "tool_sleep.h"
-
+int n1;
 #ifndef WIN32
 void milliseconds_sleep(unsigned long mSec){
     struct timeval tv;
@@ -22,7 +22,10 @@ void fly_sleep(int millis){
 	if(millis<=0){
 		return;
 	}
-	printf("<waitting-%d-ms>",millis);
+	n1 = millis/1000;
+	if (n1 > 0) {
+		printf("[W%d]", millis / 1000);
+	}
 	fflush(stdout);
 #ifdef WIN32
 	Sleep(millis);

@@ -1,17 +1,17 @@
 RM := rm -rf
-CC = arm-linux-androideabi-gcc -I/home/flyzebra/android-curl/include
+CC = gcc
 -include sources.mk
 -include src/tool/subdir.mk
 -include src/subdir.mk
 USER_OBJS :=
-LIBS := /home/flyzebra/android-curl/lib/libcurl.a
+LIBS := -lcurl
 
 all: FlyGo
 
 FlyGo: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross GCC Linker'
-	$(CC)  -o "build/bin/flygo-android" $(OBJS) $(USER_OBJS) /home/flyzebra/android-curl/lib/libcurl.a
+	$(CC)  -o "build/bin/flygo-linux" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

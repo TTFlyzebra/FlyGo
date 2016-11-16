@@ -19,6 +19,7 @@
 #include "tool/tool_file.h"
 #include "tool/tool_time.h"
 #include "tool/tool_url.h"
+#include "log/flylog.h"
 
 int main(int argc, char** argv) {
 	char replace_bf[256];
@@ -35,7 +36,10 @@ int main(int argc, char** argv) {
 	int i = 0;
 	int newLen = 0;
 
+	flylog("file=%s,func=%s,line=%d\n",__FILE__,__FUNCTION__,__LINE__);
+
 	printf("###%s#program start!\n", flytime());
+
 
 	if (argc > 3) {
 		filename = argv[3];
@@ -85,10 +89,9 @@ int main(int argc, char** argv) {
 
 			}
 #ifdef WIN32
-			printf("-- running loop %d/%d --\n", i + 1,loopsum);
+			printf("-- running loop %d/%d [%s]--\n", i + 1,loopsum,flytime());
 #else
-			printf("-- running loop %d/%d pid=%d --\n", i + 1, loopsum,
-					getpid());
+			printf("-- running loop %d/%d pid=%d [%s]--\n", i + 1, loopsum,getpid(),flytime());
 #endif
 		}
 		printf("###send http finished!\n");

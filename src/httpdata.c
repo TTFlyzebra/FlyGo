@@ -46,7 +46,7 @@ ListSHttpData* get_curl_http_data(char * curlStr, ListSHttpData* firstListSHttpD
 			listSHttpData = listSHttpData->next;
 		}
 
-		printf("%d>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n",i);
+//		printf("%d>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n",i);
 
 		//获取url
 		subStartPos = oneCurlBuffer;
@@ -108,7 +108,7 @@ ListSHttpData* get_curl_http_data(char * curlStr, ListSHttpData* firstListSHttpD
 			pTempChar = listSHttpData->sHttpData.creatTime;
 			memcpy(pTempChar, subBuffer, strlen(subBuffer));
 			url_decode(listSHttpData->sHttpData.creatTime,strlen(subBuffer));
-			printf("time=%s\n", listSHttpData->sHttpData.creatTime);
+//			printf("time=%s\n", listSHttpData->sHttpData.creatTime);
 		}
 //		printf("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
 	}
