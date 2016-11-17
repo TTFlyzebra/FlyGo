@@ -22,6 +22,8 @@
 #include "log/flylog.h"
 #include "tool/tool_string.h"
 #include "tool/tool_rand.h"
+#include "tool/tool_utils.h"
+
 int main(int argc, char** argv) {
 	char replace_bf[256];
 	char *crt_time;
@@ -38,9 +40,14 @@ int main(int argc, char** argv) {
 	int newLen = 0;
 
 	//定义要替换的字符串
-	char cmid[33];
-	char pid[33];
-	char rid[65];
+	char cmid1[33] = "677FCD000D3C0CEF61272F8885A6DCA1";
+	char pid11[33] = "5F578D0C6F30787560B653E53035C8A9";
+	char pid12[33] = "5f578d0c6f30787560b653e53035c8a9";
+	char rid1[65] = "CC311E3F3BBFE6FF1589334602D31519B6DE5019";
+	char cmid2[33];
+	char pid21[33];
+	char pid22[33];
+	char rid2[65];
 
 	char *tempPS;
 
@@ -76,39 +83,47 @@ int main(int argc, char** argv) {
 	filedata = read_all_file(filename, filedata_bf);
 
 	if (filedata != NULL) {
-		printf("###%sread setting file succeed,start get httpdata......\n",flytime());
+		printf("###%sread setting file succeed,start get httpdata......\n",
+				flytime());
 		firstListSCurlData = get_curl_http_data(filedata, firstListSCurlData);
 		printf("###%sget httpdate succeed, start send http......\n", flytime());
+		srand(clock());
 		for (i = 0; i < loopsum; i++) {
 
 			//替换字符串,在每次任务开始生成随机字符串
 			tempPS = getRandomString(32);
-			memcpy(cmid, tempPS, 32);
-			cmid[32] = '\0';
+			memcpy(cmid2, tempPS, 32);
+			cmid2[32] = '\0';
+			flylog_1("replace cmid2=%s\n", cmid2);
 
 			tempPS = getRandomString(32);
-			memcpy(pid, tempPS, 32);
-			pid[32] = '\0';
+			memcpy(pid21, tempPS, 32);
+			pid21[32] = '\0';
+			flylog_1("replace pid21=%s\n", pid21);
+
+			memcpy(pid22,pid21,32);
+			strlwr(pid22);
+			flylog_1("replace pid22=%s\n", pid22);
 
 			tempPS = getRandomString(40);
-			memcpy(rid, tempPS, 40);
-			rid[64] = '\0';
+			memcpy(rid2, tempPS, 40);
+			rid2[64] = '\0';
+			flylog_1("replace rid2=%s\n", rid2);
 
 			temListSCurlData = firstListSCurlData;
 			while (temListSCurlData != NULL) { //
 
 				//替换cimd
-				replace_string_end(temListSCurlData->sHttpData.url, "677FCD000D3C0CEF61272F8885A6DCA1",cmid);
-				replace_string_end(temListSCurlData->sHttpData.url,"F0F8997469C41EDBB4663B2DEAD619C9",pid);
-				replace_string_end(temListSCurlData->sHttpData.url,"f0f8997469c41edbb4663b2dead619c9",pid);
-				replace_string_end(temListSCurlData->sHttpData.url,"67FC1C4F594DD29C69839030931B16C8CCDB7121",rid);
+				replace_string_start(temListSCurlData->sHttpData.url, cmid1,cmid2);
+				replace_string_start(temListSCurlData->sHttpData.url, pid11,pid21);
+				replace_string_start(temListSCurlData->sHttpData.url, pid12,pid22);
+				replace_string_start(temListSCurlData->sHttpData.url, rid1,rid2);
 
-				replace_string_end(temListSCurlData->sHttpData.postdata, "677FCD000D3C0CEF61272F8885A6DCA1",cmid);
-				replace_string_end(temListSCurlData->sHttpData.postdata,"F0F8997469C41EDBB4663B2DEAD619C9",pid);
-				replace_string_end(temListSCurlData->sHttpData.postdata,"f0f8997469c41edbb4663b2dead619c9",pid);
-				replace_string_end(temListSCurlData->sHttpData.postdata, "67FC1C4F594DD29C69839030931B16C8CCDB7121",rid);
+				replace_string_start(temListSCurlData->sHttpData.postdata,cmid1, cmid2);
+				replace_string_start(temListSCurlData->sHttpData.postdata, pid11, pid21);
+				replace_string_start(temListSCurlData->sHttpData.postdata, pid12, pid22);
+				replace_string_start(temListSCurlData->sHttpData.postdata, rid1, rid2);
 //				67FC1C4F594DD29C69839030931B16C8CCDB7121
-				flylog_1("cmid=%s\n", cmid);
 
 				memset(replace_bf, 0, strlen(replace_bf));
 				//替换时间
@@ -136,9 +151,16 @@ int main(int argc, char** argv) {
 #ifdef WIN32
 			printf("[%d/%d][%s]\n", i + 1,loopsum,flytime());
 #else
-			printf("[%d/%d][pid=%d][%s]\n", i + 1, loopsum, getpid(),
-					flytime());
+			printf("[%d/%d][pid=%d][%s]\n", i + 1, loopsum, getpid(),flytime());
 #endif
+			memcpy(cmid1,cmid2,strlen(cmid2));
+			memcpy(pid11,pid21,strlen(pid21));
+			memcpy(pid12,pid22,strlen(pid22));
+			memcpy(rid1,rid2,strlen(rid2));
+			flylog_1("replace cmid1=%s\n", cmid1);
+			flylog_1("replace pid11=%s\n", pid11);
+			flylog_1("replace pid12=%s\n", pid12);
+			flylog_1("replace rid1=%s\n", rid1);
 		}
 		printf("###send http finished!\n");
 		free_curl_http_data(firstListSCurlData);

@@ -15,16 +15,16 @@ char* getRandomString(int length) {
 	int flag;
     int i;
 	for (i = 0; i < length; i++) {
-		flag = rand() % 3;
+		flag = rand() % 2;
 		switch (flag) {
 		case 0:
 			randStr[i] = 'A' + rand() % 26;
 			break;
 		case 1:
-			randStr[i] = 'a' + rand() % 26;
+			randStr[i] = '0' + rand() % 10;
 			break;
 		case 2:
-			randStr[i] = '0' + rand() % 10;
+			randStr[i] = 'a' + rand() % 26;
 			break;
 		default:
 			randStr[i] = 'x';
