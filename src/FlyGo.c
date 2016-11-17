@@ -76,8 +76,7 @@ int main(int argc, char** argv) {
 	filedata = read_all_file(filename, filedata_bf);
 
 	if (filedata != NULL) {
-		printf("###%sread setting file succeed,start get httpdata......\n",
-				flytime());
+		printf("###%sread setting file succeed,start get httpdata......\n",flytime());
 		firstListSCurlData = get_curl_http_data(filedata, firstListSCurlData);
 		printf("###%sget httpdate succeed, start send http......\n", flytime());
 		for (i = 0; i < loopsum; i++) {
