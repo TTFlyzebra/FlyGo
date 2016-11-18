@@ -167,5 +167,3 @@ char *strupr(char *str){
     return orign;
 }
 
-
-

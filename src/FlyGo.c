@@ -27,7 +27,7 @@
 int main(int argc, char** argv) {
 	char replace_bf[256];
 	char *crt_time;
-	char filedata_bf[1024 * 512] = { 0 };
+	char filedata_bf[1024 * 1024] = { 0 };
 	char *filedata = NULL;
 
 	char *filename = "set.sh";
@@ -40,10 +40,10 @@ int main(int argc, char** argv) {
 	int newLen = 0;
 
 	//定义要替换的字符串
-	char cmid1[33] = "677FCD000D3C0CEF61272F8885A6DCA1";
-	char pid11[33] = "5F578D0C6F30787560B653E53035C8A9";
-	char pid12[33] = "5f578d0c6f30787560b653e53035c8a9";
-	char rid1[65] = "CC311E3F3BBFE6FF1589334602D31519B6DE5019";
+	char cmid1[33] = "9ED19445C53E31E2B935F03AE07A1E9B";
+	char pid11[33] = "CDEBEEBA299EC256FFBBE7A781D8F623";
+	char pid12[33] = "cdebeeba299ec256ffbbe7a781d8f623";
+	char rid1[65] = "7545EA9A8B89DC37BCFC62E04A9EEDB1101EC85C";
 	char cmid2[33];
 	char pid21[33];
 	char pid22[33];
@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
 	char *tempPS;
 
 //	flylog("file=%s,func=%s,line=%d\n",__FILE__,__FUNCTION__,__LINE__);
-	printf("###%s#program start!\n", flytime());
+	printf("###[%s]#program start!\n", flytime());
 	if (argc > 4) {
 		FLYLOG_DEBUG = atoi(argv[4]);
 		flylog_set_debug(FLYLOG_DEBUG);
@@ -83,9 +83,9 @@ int main(int argc, char** argv) {
 	filedata = read_all_file(filename, filedata_bf);
 
 	if (filedata != NULL) {
-		printf("###%sread setting file succeed,start get httpdata......\n", flytime());
+		printf("###[%s]read setting file succeed,start get httpdata......\n", flytime());
 		firstListSCurlData = get_curl_http_data(filedata, firstListSCurlData);
-		printf("###%sget httpdate succeed, start send http......\n", flytime());
+		printf("###[%s]get httpdate succeed, start send http......\n", flytime());
 		srand(clock());
 		for (i = 0; i < loopsum; i++) {
 
@@ -157,14 +157,14 @@ int main(int argc, char** argv) {
 			flylog_1("replace pid12=%s\n", pid12);
 			flylog_1("replace rid1=%s\n", rid1);
 		}
-		printf("###send http finished!\n");
+		printf("###[%s]send http finished!\n",flytime());
 		free_curl_http_data(firstListSCurlData);
 		firstListSCurlData = NULL;
 	} else {
-		printf("###read setting file failed, file path = (%s) !\n", filename);
+		printf("###[%s]read setting file failed, file path = (%s) !\n", flytime,filename);
 	}
 
-	printf("###%s#program exit!\n", flytime());
+	printf("###[%s]#program exit!\n", flytime());
 
 	return EXIT_SUCCESS;
 }
