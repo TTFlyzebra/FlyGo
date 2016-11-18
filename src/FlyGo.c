@@ -83,8 +83,7 @@ int main(int argc, char** argv) {
 	filedata = read_all_file(filename, filedata_bf);
 
 	if (filedata != NULL) {
-		printf("###%sread setting file succeed,start get httpdata......\n",
-				flytime());
+		printf("###%sread setting file succeed,start get httpdata......\n", flytime());
 		firstListSCurlData = get_curl_http_data(filedata, firstListSCurlData);
 		printf("###%sget httpdate succeed, start send http......\n", flytime());
 		srand(clock());
@@ -129,13 +128,9 @@ int main(int argc, char** argv) {
 				//替换时间
 				crt_time = flytime();
 				if (temListSCurlData->sHttpData.creatTime[0] != '\0') {
-					url_encode_char(crt_time, replace_bf, strlen(crt_time),
-							&newLen, ' ');
-					replace_string_start(temListSCurlData->sHttpData.url,
-							"2016-11-", replace_bf);
-					replace_string_time(temListSCurlData->sHttpData.postdata,
-							"2016%2D11%2D");
-
+					url_encode_char(crt_time, replace_bf, strlen(crt_time),	&newLen, ' ');
+					replace_string_start(temListSCurlData->sHttpData.url,"2016-11-", replace_bf);
+					replace_string_time(temListSCurlData->sHttpData.postdata,"2016%2D11%2D");
 					flylog_4("\n%s\n", temListSCurlData->sHttpData.creatTime);
 					flylog_4("%s\n", temListSCurlData->sHttpData.url);
 					flylog_4("%s\n", temListSCurlData->sHttpData.postdata);

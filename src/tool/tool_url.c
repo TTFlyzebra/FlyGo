@@ -31,10 +31,8 @@ char* url_encode(char const *s, char *buffer,int len, int *new_length) {
 
 	start = (unsigned char *)buffer;
 	to = (unsigned char *)buffer;
-
 	while (from < end) {
 		c = *from++;
-
 		if ((c < '0') || (c < 'A' && c > '9') || (c > 'Z' && c < 'a') || (c > 'z')) {
 			to[0] = '%';
 			to[1] = hexchars[c >> 4];

@@ -22,6 +22,8 @@ char* cut_string(char* findStr, char* markStr, char *startStr, char *endStr,char
 int replace_string_start(char* findStr, char* markStr, char *replaceStr);
 int replace_string_end(char* findStr, char* markStr, char *replaceStr);
 int replace_string_time(char* findStr, char* markStr);
+char *strlwr(char *str);
+char *strupr(char *str);
 
 #ifdef __cplusplus
 }

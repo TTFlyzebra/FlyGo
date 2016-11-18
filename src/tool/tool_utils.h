@@ -9,5 +9,5 @@
 #define TOOL_TOOL_UTILS_H_
 
 void swap(char *p1,char* p2);
-char *strlwr(char *str);
+
 #endif /* TOOL_TOOL_UTILS_H_ */

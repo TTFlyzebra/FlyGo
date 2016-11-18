@@ -143,5 +143,29 @@ int replace_string_end(char* findStr, char* markStr, char *replaceStr) {
 	return ret;
 }
 
+/**
+ * 函数功能:将字符串中的英文字符全部转换成小写
+ * 参数：str _in_out 转换的字符串
+ * 返回结果：将修改后的结果返回
+ **/
+char *strlwr(char *str){
+    char *orign = str;
+    for (; *str!='\0'; str++)
+        *str = tolower(*str);
+    return orign;
+}
+
+/**
+ * 函数功能:将字符串中的英文字符全部转换成大写
+ * 参数：str _in_out 转换的字符串
+ * 返回结果：将修改后的结果返回
+ **/
+char *strupr(char *str){
+    char *orign = str;
+    for (; *str!='\0'; str++)
+        *str = toupper(*str);
+    return orign;
+}
+
 
 
