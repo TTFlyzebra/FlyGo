@@ -10,8 +10,8 @@
 
 #include <stdio.h>
 #include <curl/curl.h>
-#include "httpdata.h"
-#include "tool/tool_string.h"
+#include "../httpdata.h"
+#include "../tool/tool_string.h"
 
 #ifdef __cplusplus
 extern "C" {

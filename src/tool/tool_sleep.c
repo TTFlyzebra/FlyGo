@@ -5,6 +5,7 @@
  *      Author: flyzebra
  */
 #include "tool_sleep.h"
+#include <unistd.h>
 #include "../log/flylog.h"
 int n1;
 #ifndef WIN32
@@ -31,7 +32,8 @@ void fly_sleep(int millis){
 #ifdef WIN32
 	Sleep(millis);
 #else
-	milliseconds_sleep(millis);
+//	milliseconds_sleep(millis);
+	usleep(millis*1000);
 #endif
 }
 

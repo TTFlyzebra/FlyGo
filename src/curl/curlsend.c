@@ -4,9 +4,12 @@ int http_get(char *url, char *savefile) {
 	CURL *curl = NULL;
 	CURLcode res = CURL_LAST;
 	struct curl_slist *headers = NULL;
-	FILE *fp = fopen(savefile, "w");
-	if (fp == NULL) {
-		return res;
+	FILE *fp;
+
+	if (savefile != NULL) {
+		fp = fopen(savefile, "w");
+	} else {
+		fp = NULL;
 	}
 
 	curl = curl_easy_init();
@@ -14,7 +17,9 @@ int http_get(char *url, char *savefile) {
 		curl_easy_setopt(curl, CURLOPT_COOKIEFILE, "cookie.txt");
 		curl_easy_setopt(curl, CURLOPT_URL, url);
 		curl_easy_setopt(curl, CURLOPT_TIMEOUT, 60);
-		curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+		if (fp != NULL) {
+			curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+		}
 		res = curl_easy_perform(curl);
 	}
 	curl_slist_free_all(headers);
@@ -48,7 +53,7 @@ int send_shttpdata(SHttpData *sHttpData, char *savefile) {
 	CURLcode res = CURL_LAST;
 	struct curl_slist *headers = NULL;
 	FILE *fp = NULL;
-	char buffer[1024];
+	char buffer[2048];
 	char* startPos = NULL;
 
 	if (savefile != NULL) {
@@ -61,7 +66,7 @@ int send_shttpdata(SHttpData *sHttpData, char *savefile) {
 		if (sHttpData->header[0] != '\0') {
 			startPos = sHttpData->header;
 			while (startPos != NULL) {
-				startPos = cut_string(startPos, "", "", "\n",	buffer);
+				startPos = cut_string(startPos, "", "", "\n", buffer);
 				headers = curl_slist_append(headers, buffer);
 			}
 			curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
@@ -76,8 +81,9 @@ int send_shttpdata(SHttpData *sHttpData, char *savefile) {
 			curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
 		}
 		res = curl_easy_perform(curl);
-
-//		printf("%d", res);
+		if (savefile != NULL) {
+			printf("%d", res);
+		}
 	}
 	curl_slist_free_all(headers);
 	curl_easy_cleanup(curl);

@@ -18,13 +18,13 @@ char* getRandomString(int length) {
 		flag = rand() % 2;
 		switch (flag) {
 		case 0:
-			randStr[i] = 'A' + rand() % 26;
+			randStr[i] = 'a' + rand() % 26;
 			break;
 		case 1:
 			randStr[i] = '0' + rand() % 10;
 			break;
 		case 2:
-			randStr[i] = 'a' + rand() % 26;
+			randStr[i] = 'A' + rand() % 26;
 			break;
 		default:
 			randStr[i] = 'x';
@@ -32,5 +32,9 @@ char* getRandomString(int length) {
 		}
 	}
 	randStr[length] = '\0';
+	return randStr;
+}
+
+char* getOldRandomString() {
 	return randStr;
 }

@@ -17,9 +17,10 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 char timebf[64];
-char* get_current_time(char *buffer,int len, char* template);
 char* flytime();
+int get_current_time_sec();
 
 #ifdef __cplusplus
 }

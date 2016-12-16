@@ -21,6 +21,8 @@ char randStr[129];
 
 char* getRandomString(int lenght);
 
+char* getOldRandomString();
+
 #ifdef __cplusplus
 }
 #endif

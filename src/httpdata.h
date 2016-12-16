@@ -16,10 +16,10 @@
 #include "log/flylog.h"
 
 typedef struct SHTTPDATA{
-	char url[2048];
-	char header[2048];//参数之间以\r\n符号分隔
+	char url[4096];
+	char header[4096];//参数之间以\r\n符号分隔
 	char postdata[4096];
-	char creatTime[256];
+	char creatTime[512];
 	int sleepTime;
 }SHttpData,*pHttpData;
 
