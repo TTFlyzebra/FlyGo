@@ -1,0 +1,11 @@
+#! /bin/sh
+export ARCH=x86
+export PATH=$PATH
+export INCLUDE_PATH=-I/usr/include
+export AR=ar
+export AS=as
+export LD=ld
+export RANLIB=ranlib
+export CC=g++
+export NM=nm
+export LIB_PATH=

@@ -13,7 +13,7 @@ typedef struct KVDATA{
 	int kvtime;
 }SKvData,*pKvData;
 
-SKvData skvdata[6];
+//SKvData skvdata[6];
 
 SKvData* getSKvData(int *sumtime);
 #endif /* KVCOLLECTDATA1_H_ */

@@ -15,6 +15,7 @@
 
 #include "httpdata.h"
 #include "kvcollectdata1.h"
+#include "kvcollect.h"
 #include "curl/curlsend.h"
 #include "tool/tool_sleep.h"
 #include "tool/tool_file.h"
@@ -28,12 +29,13 @@
 #include "livemsg_getadlist.h"
 
 int main(int argc, char** argv) {
-	char filedata_bf[512 * 1024] = { 0 };
+	FLYLOG_DEBUG = 0xfff;
+	flylog_set_debug(FLYLOG_DEBUG);
+	printf("enter main func\r\n");
+		char filedata_bf[512 * 1024] = { 0 };
 	char *filedata = NULL;
-
 	char replace_bf[256];
 	char *crt_time;
-
 	char *filename = "set.fly";
 	ListSHttpData *firstListSCurlData = NULL;
 	ListSHttpData *temListSCurlData = NULL;
@@ -59,16 +61,25 @@ int main(int argc, char** argv) {
 	int sum;
 	int sendcount;
 	SKvData *skvdata;
-
-	flylog("###[%s]#program start!\n", flytime());
+	printf("start getSKvData file %s line:%d\r\n",__FILE__,__LINE__);
+	//flylog("###[%s]#program start!\n", flytime());
 	skvdata = getSKvData(&sum);
+	if (skvdata != NULL) {
+		printf("get skvdata \r\n");
+	}
+	else {
+		printf("can not get skvdata exit\r\n");
+		return -1;
+
+	}
+
 	for (i = 0; i < 100000; i++) {
 		sendcount = 0;
 		for (j = 0; j < 6; j++) {
 			if (skvdata[j].kvtime != 0) {
 				http_get(getkvcollecturl(skvdata[j].kvurl, 0, 0, 0), "ret1.txt");
-				fly_sleep(skvdata[j].kvtime);
-				http_get(getkvcollecturl(skvdata[j].kvurl, sendcount, skvdata[j].kvtime,sum), "ret2.txt");
+				fly_sleep(skvdata[j].kvtime);				
+				http_get(getkvcollecturl(skvdata[j].kvurl, sendcount, skvdata[j].kvtime,sum), "ret2.txt");				
 				sendcount++;
 			}
 //			flylog("====time = %d\n", skvdata[j].kvtime);

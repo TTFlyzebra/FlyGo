@@ -11,8 +11,7 @@
 extern "C" {
 #endif
 
-char* read_all_file(char*buffer,char *filename);
-
+char* read_all_file(char *filename, char*buffer);
 
 #ifdef __cplusplus
 }

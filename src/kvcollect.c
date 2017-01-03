@@ -5,9 +5,13 @@
  *      Author: flyzebra
  */
 #include "kvcollect.h"
+#include "tool/tool_time.h"
+#include "tool/tool_url.h"
+#include "log/flylog.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+char kvbuffer[4096];
 char *getkvcollecturl(char *url, int count, int time, int sumtime) {
 	char temp[1024];
 	char replace_bf[256];

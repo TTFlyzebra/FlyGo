@@ -5,7 +5,7 @@
  *      Author: flyzebra
  */
 #include "tool_rand.h"
-
+char randStr[129];
 /**
  * 函数功能:生成随机字符串
  * 参数：@length 生成的字符串长度

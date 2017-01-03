@@ -9,6 +9,7 @@
 #include "tool/tool_rand.h"
 #include "tool/tool_time.h"
 #include "log/flylog.h"
+char adurl[1024];
 char *getadurl() {
 	char timestr[32];
 

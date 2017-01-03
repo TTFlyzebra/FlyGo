@@ -18,7 +18,7 @@
 extern "C" {
 #endif
 
-char timebf[64];
+extern char timebf[64];
 char* flytime();
 int get_current_time_sec();
 

@@ -12,7 +12,7 @@
 extern "C" {
 #endif
 
-char adurl[1024];
+extern char adurl[1024];
 
 char *getadurl();
 

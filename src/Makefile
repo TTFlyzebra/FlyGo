@@ -7,35 +7,55 @@ LDLIBS_IN := $(LDLIBS)
 
 LINKER = $(CC)
 STATIC ?= 0
-INCLUDE_PATH += -I../curl/include
+DEBUG ?= 1
+
+CURL_PREFIX=$(HOME)/curl_install/$(ARCH)
+CURL_INCLUDE_DIR=$(CURL_PREFIX)/include
+CURL_LIB_DIR=$(CURL_PREFIX)/lib
+INCLUDE_PATH += -I$(CURL_INCLUDE_DIR)
+
+OPENSSL_PREFIX=$(HOME)/openssl-install/$(ARCH)
+OPENSSL_INCLUDE_DIR=$(OPENSSL_PREFIX)/include
+OPENSSL_LIB_DIR=$(OPENSSL_PREFIX)/lib
+INCLUDE_PATH += -I$(OPENSSL_INCLUDE_DIR)
 
 ifdef DEBUG
-CFLAGS += -O0
+CFLAGS += -g -O0
 CPPFLAGS += -DDEBUG
+LDFLAGS += -g
 endif
+LDFLAGS += -L$(CURL_LIB_DIR)
+LDFLAGS += -L$(OPENSSL_LIB_DIR)
+LDLIBS += 
+LIBFILES += $(addprefix $(CURL_LIB_DIR)/,libcurl.a)
+LIBFILES += $(addprefix $(OPENSSL_LIB_DIR)/,libssl.a)
+LIBFILES += $(addprefix $(OPENSSL_LIB_DIR)/,libcrypto.a)
+
 LDFLAGS += $(LIB_PATH)
-LDFLAGS += -L./lib/ 
+#LDFLAGS += -L./lib/ 
 LDLIBS += 
 #LIBFILES += ./lib/$(ARCH)/libcurl.a
-LIBFILES += $(addprefix ./lib/$(ARCH)/,libcurl.a)  
+#LIBFILES += $(addprefix ./lib/$(ARCH)/,libcurl.a)  
 
-CFLAGS += $(call cc-option, -Wdeclaration-after-statement)
-CFLAGS += $(call cc-option, -Wno-switch)
-CFLAGS += $(call cc-option, -Wdisabled-optimization)
-CFLAGS += $(call cc-option, -Wpointer-arith)
-CFLAGS += $(call cc-option, -Wredundant-decls)
-CFLAGS += $(call cc-option, -Wno-pointer-sign)
-CFLAGS += $(call cc-option, -Wcast-qual)
-CFLAGS += $(call cc-option, -Wwrite-strings)
-CFLAGS += $(call cc-option, -Wtype-limits)
-CFLAGS += $(call cc-option, -Wundef)
 
-CFLAGS += $(call cc-option, -funit-at-a-time)
 CPPFLAGS +=$(CFLAGS)
 
 CPPFLAGS += $(INCLUDE_PATH)
 OBJS =
-OBJS += curlutil.o fly.o qqpostdata.o url.o utils.o timeutil.o
+OBJS += curl/curlsend.o \
+			tool/tool_utils.o \
+			tool/tool_url.o \
+			tool/tool_sleep.o \
+			tool/tool_string.o \
+			tool/cJSON.o \
+			tool/tool_file.o \
+			tool/tool_rand.o \
+			tool/tool_time.o \
+			log/flylog.o \
+			livemsg_getadlist.o \
+			httpdata.o \
+			kvcollect.o \
+			kvcollectdata1.o
 
 ifeq ($(STATIC), 1)
 EXECTARGET := $(EXECTARGET)-halfstatic
@@ -60,12 +80,17 @@ LDLIBS += $(LDLIBS_IN)
 #lm might be needed again at the end
 LDLIBS += $(call ld-option, -lm)
 LDLIBS += $(call ld-option, -lz)
+LDLIBS +=-ldl
+ifeq ($(ARCH), x86)
+LDLIBS +=-lpthread
+endif
+
 .PHONY: clean distclean
 
 all: $(LIBTARGET) $(EXECTARGET)
 
 $(EXECTARGET): FlyGo.o $(LIBTARGET)
-	$(CC) $(LDFLAGS) -Wl,--start-group $^ $(LIBFILES) $(LOADLIBES) $(LDLIBS) -Wl,--end-group $(LDFLAGSPOST) -o $@
+	$(CC) $(LDFLAGS) -Wl,--start-group $^ $(LIBFILES) $(LOADLIBES) $(LDLIBS) -Wl,--end-group $(LDFLAGSPOST) -o $@ -Wl,-Map,$@.map
 
 $(LIBTARGET):$(OBJS)
 	$(AR) cru $@ $^
@@ -84,11 +109,14 @@ version.d: version.h
 
 clean:
 	rm -f $(LIBTARGET)
+	rm -f $(EXECTARGET)
 	rm -f $(EXECTARGET)-*
-	rm -f *.o
+	rm -f $(OBJS)
 	rm -f version.h
 	rm -f *.a
-
+	rm -f *.map
+	rm -f *.o
+	
 distclean: clean
 %.o:%.c %.cpp
 	$(CC) $(CPPFLAGS) -c -o $@ $<

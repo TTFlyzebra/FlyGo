@@ -10,7 +10,7 @@
 #include "curl/curlsend.h"
 #include "tool/tool_file.h"
 #include "livemsg_getadlist.h"
-
+static SKvData skvdata[6];
 SKvData* getSKvData(int *sumtime) {
 	char filedata_bf[512 * 1024] = { 0 };
 	char *filedata = NULL;
@@ -19,10 +19,12 @@ SKvData* getSKvData(int *sumtime) {
 	char *reporturl;
 	flylog_4("start getSKvData!\n");
 	http_get(getadurl(), "adurl.txt");
-//	memset(filedata_bf, 0, sizeof(filedata_bf));
-	flylog_4("start getSKvData!\n");
-	filedata = read_all_file("adurl.txt", filedata_bf);
-	flylog_4("start getSKvData!\n");
+//	memset(filedata_bf, 0, sizeof(filedata_bf));	
+	filedata = read_all_file((char *)"adurl.txt",(char*)filedata_bf);
+	if (NULL == filedata) {
+		flylog_4("read_all_file retun NULL\r\n");
+		return NULL;
+	}
 	filedata = filedata + strlen("lviewcb(");
 	temp = filedata + strlen(filedata) - 1;
 	*temp = '\0';

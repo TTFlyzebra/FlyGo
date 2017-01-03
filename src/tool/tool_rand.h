@@ -17,7 +17,7 @@
 extern "C" {
 #endif
 
-char randStr[129];
+extern char randStr[129];
 
 char* getRandomString(int lenght);
 

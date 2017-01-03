@@ -16,7 +16,7 @@ extern "C" {
 #endif
 
 
-int  FLYLOG_DEBUG;
+extern int  FLYLOG_DEBUG;
 void flylog(char *format, ...);
 void flylog_1(char *format, ...);
 void flylog_2(char *format, ...);

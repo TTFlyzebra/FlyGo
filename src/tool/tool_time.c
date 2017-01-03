@@ -5,6 +5,7 @@
  *      Author: flyzebra
  */
 #include "tool_time.h"
+char timebf[64];
 /**
  * %Y-%m-%d %I:%M:%S\n
  */

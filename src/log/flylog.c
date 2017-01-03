@@ -6,6 +6,7 @@
  */
 #include "flylog.h"
 
+int FLYLOG_DEBUG = 0xff;
 void flylog(char *format, ...) {
 	va_list ap;
 	va_start(ap, format);

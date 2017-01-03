@@ -12,8 +12,8 @@
 extern "C" {
 #endif
 
-char kvbuffer[4096];
-char *getkvcollecturl();
+extern char kvbuffer[4096];
+char *getkvcollecturl(char *url, int count, int time, int sumtime);
 
 #ifdef __cplusplus
 }
