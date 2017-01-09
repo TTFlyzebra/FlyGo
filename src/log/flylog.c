@@ -50,6 +50,7 @@ void flylog_4(char *format, ...) {
 	}
 }
 
-void flylog_set_debug(int mSetDebug) {
-	FLYLOG_DEBUG = mSetDebug;
+void flylog_set_debug(int level) {
+	FLYLOG_DEBUG = level;
+	flylog("set debug log level %d\n",level);
 }

@@ -19,7 +19,7 @@ static int php_htoi(char *s) {
 	return (value);
 }
 
-char* url_encode(char const *s, char *buffer,int len, int *new_length) {
+char* url_encode(const char *s, char *buffer,int len, int *new_length) {
 	register unsigned char c;
 	unsigned char* to;
 	unsigned char*start;
@@ -34,6 +34,36 @@ char* url_encode(char const *s, char *buffer,int len, int *new_length) {
 	while (from < end) {
 		c = *from++;
 		if ((c < '0') || (c < 'A' && c > '9') || (c > 'Z' && c < 'a') || (c > 'z')) {
+			to[0] = '%';
+			to[1] = hexchars[c >> 4];
+			to[2] = hexchars[c & 15];
+			to += 3;
+		} else {
+			*to++ = c;
+		}
+	}
+	*to = 0;
+	if (new_length) {
+		*new_length = to - start;
+	}
+	return buffer;
+}
+
+char* url_encode_char(const char *s, char *buffer,int len, int *new_length,char nochar) {
+	register unsigned char c;
+	unsigned char* to;
+	unsigned char*start;
+	unsigned char const *from, *end;
+
+	from = (unsigned char *) s;
+	end = (unsigned char *) s + len;
+
+	start = (unsigned char *)buffer;
+	to = (unsigned char *)buffer;
+
+	while (from < end) {
+		c = *from++;
+		if (c==nochar) {
 			to[0] = '%';
 			to[1] = hexchars[c >> 4];
 			to[2] = hexchars[c & 15];
@@ -68,34 +98,6 @@ int url_decode(char *str, int len) {
 	return dest - str;
 }
 
-char* url_encode_char(char const *s, char *buffer,int len, int *new_length,char nochar) {
-	register unsigned char c;
-	unsigned char* to;
-	unsigned char*start;
-	unsigned char const *from, *end;
 
-	from = (unsigned char *) s;
-	end = (unsigned char *) s + len;
-
-	start = (unsigned char *)buffer;
-	to = (unsigned char *)buffer;
-
-	while (from < end) {
-		c = *from++;
-		if (c==nochar) {
-			to[0] = '%';
-			to[1] = hexchars[c >> 4];
-			to[2] = hexchars[c & 15];
-			to += 3;
-		} else {
-			*to++ = c;
-		}
-	}
-	*to = 0;
-	if (new_length) {
-		*new_length = to - start;
-	}
-	return buffer;
-}
 
 

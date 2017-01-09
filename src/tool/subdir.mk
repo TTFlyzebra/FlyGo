@@ -9,7 +9,8 @@ C_SRCS += \
 ./src/tool/tool_sleep.c \
 ./src/tool/tool_string.c \
 ./src/tool/tool_time.c \
-./src/tool/tool_url.c 
+./src/tool/tool_url.c \
+./src/tool/tool_utils.c 
 
 OBJS += \
 ./build/lib/tool/tool_file.o \
@@ -17,7 +18,8 @@ OBJS += \
 ./build/lib/tool/tool_sleep.o \
 ./build/lib/tool/tool_string.o \
 ./build/lib/tool/tool_time.o \
-./build/lib/tool/tool_url.o 
+./build/lib/tool/tool_url.o \
+./build/lib/tool/tool_utils.o 
 
 C_DEPS += \
 ./build/lib/tool/tool_file.d \
@@ -25,7 +27,8 @@ C_DEPS += \
 ./build/lib/tool/tool_sleep.d \
 ./build/lib/tool/tool_string.d \
 ./build/lib/tool/tool_time.d \
-./build/lib/tool/tool_url.d 
+./build/lib/tool/tool_url.d \
+./build/lib/tool/tool_utils.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

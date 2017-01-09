@@ -13,21 +13,21 @@ char randStr[129];
  **/
 char* getRandomString(int length) {
 	int flag;
-    int i;
+	int i;
 	for (i = 0; i < length; i++) {
 		flag = rand() % 2;
 		switch (flag) {
 		case 0:
-			randStr[i] = 'a' + rand() % 26;
+			randStr[i] = 'a' + rand() % 6;
 			break;
 		case 1:
 			randStr[i] = '0' + rand() % 10;
 			break;
 		case 2:
-			randStr[i] = 'A' + rand() % 26;
+			randStr[i] = 'A' + rand() % 6;
 			break;
 		default:
-			randStr[i] = 'x';
+			randStr[i] = '1';
 			break;
 		}
 	}
@@ -36,5 +36,14 @@ char* getRandomString(int length) {
 }
 
 char* getOldRandomString() {
+	return randStr;
+}
+
+char* getRandomInteger(int length) {
+	int i;
+	for (i = 0; i < length; i++) {
+		randStr[i] = '0' + rand() % 10;
+	}
+	randStr[length] = '\0';
 	return randStr;
 }

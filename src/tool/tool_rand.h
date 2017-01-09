@@ -23,6 +23,8 @@ char* getRandomString(int lenght);
 
 char* getOldRandomString();
 
+char* getRandomInteger(int length);
+
 #ifdef __cplusplus
 }
 #endif
