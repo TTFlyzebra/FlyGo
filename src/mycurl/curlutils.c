@@ -73,6 +73,7 @@ int send_curl_cmd(char *curlcmd, char* savefile) {
 	if (savefile != NULL) {
 		fp = fopen(savefile, "w");
 	}
+
 	curl = curl_easy_init();
 
 	if (curl) {

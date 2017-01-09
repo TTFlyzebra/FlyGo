@@ -1,7 +1,7 @@
 -include ../makefile.init
 
 RM := rm -rf
-CC = arm-linux-androideabi-gcc
+CC = gcc
 -include sources.mk
 -include src/subdir.mk
 -include src/json/subdir.mk
@@ -17,7 +17,7 @@ all: FlyGo
 FlyGo: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross GCC Linker'
-	$(CC) -o "build/bin/flygo-android" $(OBJS) $(USER_OBJS) ./src/lib/arm/libcurl.a ./src/lib/arm/liblua.a  -ldl -lm
+	$(CC)  -o "build/bin/flygo-linux" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
