@@ -31,6 +31,8 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1867222472" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker">
 								<option id="gnu.c.link.option.libs.272276267" name="Libraries (-l)" superClass="gnu.c.link.option.libs" useByScannerDiscovery="false" valueType="libs">
 									<listOptionValue builtIn="false" value="curl"/>
+									<listOptionValue builtIn="false" value="lua"/>
+									<listOptionValue builtIn="false" value="dl"/>
 									<listOptionValue builtIn="false" value="m"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.686983543" superClass="cdt.managedbuild.tool.gnu.c.linker.input">
@@ -82,6 +84,8 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.185090869" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker">
 								<option id="gnu.c.link.option.libs.2035507339" name="Libraries (-l)" superClass="gnu.c.link.option.libs" useByScannerDiscovery="false" valueType="libs">
 									<listOptionValue builtIn="false" value="curl"/>
+									<listOptionValue builtIn="false" value="lua"/>
+									<listOptionValue builtIn="false" value="dl"/>
 									<listOptionValue builtIn="false" value="m"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.491525257" superClass="cdt.managedbuild.tool.gnu.c.linker.input">

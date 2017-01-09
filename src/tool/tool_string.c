@@ -28,8 +28,7 @@ char* cut_string_with_start_mark(char* findStr, char* startMark, char *buffer) {
 	return firstPos;
 }
 
-char* cut_string(char* findStr, char* markStr, char *startStr, char *endStr,
-		char *buffer) {
+char* cut_string(char* findStr, char* markStr, char *startStr, char *endStr, char *buffer) {
 	char *startPos = findStr;
 	char *endPos = findStr;
 	char *bufEndpos = buffer;

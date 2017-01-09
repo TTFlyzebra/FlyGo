@@ -3,21 +3,31 @@
 ################################################################################
 
 # Add inputs and outputs from these tool invocations to the build variables 
+	
 C_SRCS += \
-./src/log/flylog.c 
+./src/json/cJSON.c \
+./src/json/fpconv.c \
+./src/json/lua_cjson.c \
+./src/json/strbuf.c 
 
 OBJS += \
-./build/lib/log/flylog.o 
+./build/lib/json/cJSON.o \
+./build/lib/json/fpconv.o \
+./build/lib/json/lua_cjson.o \
+./build/lib/json/strbuf.o 
 
 C_DEPS += \
-./build/lib/log/flylog.d 
+./build/lib/json/cJSON.d \
+./build/lib/json/fpconv.d \
+./build/lib/json/lua_cjson.d\
+./build/lib/json/strbuf.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
-./build/lib/log/%.o: ./src/log/%.c
+./build/lib/json/%.o: ./src/json/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross GCC Compiler'
-	gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
+	$(CC) -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

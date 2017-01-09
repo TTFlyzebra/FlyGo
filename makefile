@@ -1,10 +1,16 @@
+-include ../makefile.init
+
 RM := rm -rf
 CC = gcc
 -include sources.mk
--include src/tool/subdir.mk
 -include src/subdir.mk
+-include src/json/subdir.mk
+-include src/log/subdir.mk
+-include src/tool/subdir.mk
+-include src/mycurl/subdir.mk
+-include src/mylua/subdir.mk
 USER_OBJS :=
-LIBS := -lcurl
+LIBS := -lcurl -llua -ldl -lm
 
 all: FlyGo
 
@@ -21,3 +27,5 @@ clean:
 
 .PHONY: all clean dependents
 .SECONDARY:
+
+-include ../makefile.init

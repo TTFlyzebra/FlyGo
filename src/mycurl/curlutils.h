@@ -10,23 +10,27 @@
 
 #include <stdio.h>
 #include <curl/curl.h>
-#include "../httpdata.h"
 #include "../tool/tool_string.h"
+#include "../httpdata.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-
 /**
  * 发送HTTP GET请求
  */
-int http_get(char *url,char *savefile);
+int send_curl_http_get(char *url,char *savefile);
 
 /**
- * 发送HTT POST请求
+ * 发送HTTP POST请求
  */
-int http_post(char *url,char *data,char *savefile);
+int send_curl_http_post(char *url,char *data,char *savefile);
+
+/**
+ * 发送CURL命令,如果参数中有cookie会读取cookie中的内容替换掉命令字符串中的内容
+ */
+int send_curl_cmd(char *curlcmd,char *savefile);
 
 /**
  * 发送HTTP请求

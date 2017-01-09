@@ -6,8 +6,8 @@
  */
 #include "kvcollectdata1.h"
 #include <stdio.h>
-#include "tool/cJSON.h"
-#include "curl/curlsend.h"
+#include "json/cJSON.h"
+#include "mycurl/curlutils.h"
 #include "tool/tool_file.h"
 #include "livemsg_getadlist.h"
 static SKvData skvdata[6];
@@ -18,7 +18,7 @@ SKvData* getSKvData(int *sumtime) {
 	int i;
 	char *reporturl;
 	flylog_4("start getSKvData!\n");
-	http_get(getadurl(), "adurl.txt");
+	send_curl_http_get(getadurl(), "adurl.txt");
 //	memset(filedata_bf, 0, sizeof(filedata_bf));	
 	filedata = read_all_file((char *)"adurl.txt",(char*)filedata_bf);
 	if (NULL == filedata) {
