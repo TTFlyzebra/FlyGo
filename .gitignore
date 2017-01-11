@@ -1,15 +1,7 @@
 /Debug/
-<<<<<<< HEAD
 /build/
-=======
->>>>>>> branch 'master' of https://github.com/TTFlyzebra/FlyGo.git
-/makefile-android
 /Release/
-<<<<<<< Upstream, based on branch 'master' of https://github.com/TTFlyzebra/FlyGo.git
 /adurl.fly
 /cookie.txt
 /flygo.lua
 /index.html
-=======
-/makefile
->>>>>>> 8e9d78f lua交叉编译完成，库文件位于src/lib/liblua.a
